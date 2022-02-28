@@ -1,6 +1,6 @@
 import unittest
 
-from src.db.example import *
+from src.db.utils import rebuild_tables
 from test.utils import *
 
 
