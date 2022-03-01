@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Api
 
+from src.api.channel import Channel
+from src.api.community import Community
 from src.api.member import Member
 
 app = Flask(__name__)
@@ -13,7 +15,9 @@ cfg = {
 
 
 def init():
-    api.add_resource(Member, '/')
+    api.add_resource(Community, '/community')
+    api.add_resource(Channel, '/channel', '/channel/<string:id>')
+    api.add_resource(Member, '/member')
 
 
 def main():

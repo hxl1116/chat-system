@@ -1,8 +1,9 @@
 from flask_restful import Resource
 
+from src.db.community import fetch_all_communities
+
 
 class Community(Resource):
-    # TODO: Implement
     @staticmethod
     def get():
-        return {'': ''}
+        return fetch_all_communities()

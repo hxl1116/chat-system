@@ -1,3 +1,9 @@
-# TODO: Implement
+from src.db.utils import fetch_many
+
+
 def fetch_all_msgs_from_chan(chan_id):
-    pass
+    return fetch_many("""
+        SELECT *
+        FROM message
+        WHERE channel_id = %s
+    """, (chan_id,))
