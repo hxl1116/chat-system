@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 
 from src.api.channel import Channel
@@ -12,6 +12,17 @@ cfg = {
     'debug': True,
     'port': 62899
 }
+
+nav_links = [
+    {'href': '/community', 'name': 'community'},
+    {'href': '/channel', 'name': 'channel'},
+    {'href': '/member', 'name': 'member'}
+]
+
+
+@app.route('/')
+def home():
+    return render_template('home.html', nav=nav_links)
 
 
 def init():
