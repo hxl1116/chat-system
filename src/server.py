@@ -1,9 +1,9 @@
 from flask import Flask, render_template
 from flask_restful import Api
 
-from src.api.channel import Channel
-from src.api.community import Community
-from src.api.member import Member
+from api.channel import Channel
+from api.community import Community
+from api.member import Member
 
 app = Flask(__name__)
 api = Api(app)

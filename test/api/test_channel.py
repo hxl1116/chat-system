@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import requests
 
-from db.utils import connect
+from src.db.utils import connect
 
 
 class TestChannel(TestCase):
