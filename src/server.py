@@ -14,9 +14,9 @@ cfg = {
 }
 
 nav_links = [
-    {'href': '/community', 'name': 'community'},
-    {'href': '/channel', 'name': 'channel'},
-    {'href': '/member', 'name': 'member'}
+    {'href': '/communities', 'name': 'communities'},
+    {'href': '/channels', 'name': 'channels'},
+    {'href': '/members', 'name': 'members'}
 ]
 
 
@@ -26,9 +26,9 @@ def home():
 
 
 def init():
-    api.add_resource(Community, '/community')
-    api.add_resource(Channel, '/channel', '/channel/<string:id>')
-    api.add_resource(Member, '/member')
+    api.add_resource(Community, '/communities')
+    api.add_resource(Channel, '/channels', '/channels/<string:id>')
+    api.add_resource(Member, '/members')
 
 
 def main():
