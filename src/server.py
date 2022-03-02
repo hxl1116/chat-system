@@ -10,7 +10,7 @@ api = Api(app)
 
 cfg = {
     'debug': True,
-    'port': 62899
+    'port': 5000
 }
 
 nav_links = [
