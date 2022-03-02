@@ -1,7 +1,7 @@
 from flask_restful import Resource
 
-from src.db.channel import fetch_all_channels
-from src.db.community import fetch_all_communities
+from db.channel import fetch_all_channels
+from db.community import fetch_all_communities
 
 
 class Community(Resource):
