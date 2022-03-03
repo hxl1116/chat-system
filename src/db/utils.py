@@ -62,3 +62,18 @@ def commit(sql, args=None):
 
 def rebuild_tables():
     exec_sql_file('../../res/schema.sql')
+
+
+def reload_routines():
+    exec_sql_file('../../res/routines/functions.sql')
+    exec_sql_file('../../res/routines/procedures.sql')
+
+
+def reload_data():
+    commit("CALL reload_test_data()")
+
+
+def init_db():
+    rebuild_tables()
+    reload_routines()
+    reload_data()

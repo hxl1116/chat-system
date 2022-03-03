@@ -1,16 +1,10 @@
 import requests
 
-from src.db.utils import connect, exec_sql_file, commit
-
-
-def insert_test_data():
-    exec_sql_file('../../res/test/test_data.sql')
+from src.db.utils import connect, reload_data
 
 
 def reload_test_data():
-    commit("""
-        CALL reload_test_data();
-    """)
+    reload_data()
 
 
 def assert_sql_count(test, sql, params=None, n=0, msg='Expected row count did not match query'):
