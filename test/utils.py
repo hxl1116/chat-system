@@ -4,7 +4,7 @@ from src.db.utils import connect, exec_sql_file
 
 
 def insert_test_data():
-    exec_sql_file('res/test/test_data.sql')
+    exec_sql_file('../../res/test/test_data.sql')
 
 
 def assert_sql_count(test, sql, n, msg='Expected row count did not match query'):

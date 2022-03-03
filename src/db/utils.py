@@ -18,7 +18,7 @@ def connect():
 
 
 def exec_sql_file(path):
-    full_path = os.path.join(os.path.dirname(__file__), f'../../{path}')
+    full_path = os.path.join(os.path.dirname(__file__), path)
 
     conn = connect()
     cur = conn.cursor()
@@ -61,4 +61,4 @@ def commit(sql, args=None):
 
 
 def rebuild_tables():
-    exec_sql_file('res/db/schema.sql')
+    exec_sql_file('../../res/db/schema.sql')

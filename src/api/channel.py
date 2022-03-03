@@ -1,7 +1,6 @@
-from flask_restful import Resource
-
 from db.channel import fetch_all_channels
 from db.message import fetch_all_msgs_from_chan
+from flask_restful import Resource
 
 
 class Channel(Resource):

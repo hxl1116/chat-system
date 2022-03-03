@@ -1,6 +1,5 @@
-from flask_restful import Resource
-
 from db.member import fetch_all_members
+from flask_restful import Resource
 
 
 class Member(Resource):
