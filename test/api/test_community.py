@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import requests
 
-from src.db.utils import connect, rebuild_tables
+from src.db.utils import connect, rebuild_tables, init_db
 from test.utils import reload_test_data
 
 
@@ -18,7 +18,7 @@ class TestCommunity(TestCase):
     def setUpClass(cls) -> None:
         cls.conn = connect()
         cls.cur = cls.conn.cursor()
-        rebuild_tables()
+        init_db()
 
     def setUp(self) -> None:
         reload_test_data()

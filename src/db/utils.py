@@ -74,6 +74,6 @@ def reload_data():
 
 
 def init_db():
-    rebuild_tables()
     reload_routines()
+    rebuild_tables()
     reload_data()
