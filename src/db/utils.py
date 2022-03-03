@@ -18,7 +18,7 @@ def connect():
 
 
 def exec_sql_file(path):
-    full_path = os.path.join(os.path.dirname(__file__), f'../../{path}')
+    full_path = os.path.join(os.path.dirname(__file__), path)
 
     conn = connect()
     cur = conn.cursor()
@@ -30,7 +30,7 @@ def exec_sql_file(path):
     conn.close()
 
 
-def exec_get_one(sql, args=None):
+def fetch_one(sql, args=None):
     conn = connect()
     cur = conn.cursor()
     cur.execute(sql, args)
@@ -40,7 +40,7 @@ def exec_get_one(sql, args=None):
     return one
 
 
-def exec_get_all(sql, args=None):
+def fetch_many(sql, args=None):
     conn = connect()
     cur = conn.cursor()
     cur.execute(sql, args)
@@ -50,7 +50,7 @@ def exec_get_all(sql, args=None):
     return list_of_tuples
 
 
-def exec_commit(sql, args=None):
+def commit(sql, args=None):
     conn = connect()
     cur = conn.cursor()
     result = cur.execute(sql, args)
@@ -58,3 +58,22 @@ def exec_commit(sql, args=None):
     conn.close()
 
     return result
+
+
+def rebuild_tables():
+    exec_sql_file('../../res/schema.sql')
+
+
+def reload_routines():
+    exec_sql_file('../../res/routines/functions.sql')
+    exec_sql_file('../../res/routines/procedures.sql')
+
+
+def reload_data():
+    commit("CALL reload_test_data()")
+
+
+def init_db():
+    reload_routines()
+    rebuild_tables()
+    reload_data()
