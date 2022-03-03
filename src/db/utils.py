@@ -61,4 +61,4 @@ def commit(sql, args=None):
 
 
 def rebuild_tables():
-    exec_sql_file('../../res/db/schema.sql')
+    exec_sql_file('../../res/schema.sql')

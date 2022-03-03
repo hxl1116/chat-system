@@ -1,9 +1,7 @@
 from unittest import TestCase
 
-import requests
-
 from src.db.utils import connect, rebuild_tables
-from test.utils import insert_test_data
+from test.utils import reload_test_data, get_rest_call, assert_sql_count
 
 
 class TestChannel(TestCase):
@@ -20,31 +18,28 @@ class TestChannel(TestCase):
     def setUpClass(cls) -> None:
         cls.conn = connect()
         cls.cur = cls.conn.cursor()
+        rebuild_tables()
 
     def setUp(self) -> None:
-        rebuild_tables()
-        insert_test_data()
+        reload_test_data()
 
     def test_get(self):
-        res = requests.get(self.ENDPOINT)
-
-        self.assertEqual(self.SUCCESS, res.status_code)
-        self.assertEqual(self.CHAN_ROWS, len(res.json()))
+        get_rest_call(self, self.ENDPOINT)
+        assert_sql_count(self, sql="SELECT * FROM channel", n=self.CHAN_ROWS)
 
     def test_get_with_id(self):
         self.cur.execute("""
             SELECT channel_id FROM channel WHERE channel_name = %s
         """, ('worms',))
-
         chan_id = self.cur.fetchone()[0]
 
-        res = requests.get(f'{self.ENDPOINT}/{chan_id}')
-
-        self.assertEqual(self.SUCCESS, res.status_code)
-        self.assertEqual(self.MSG_ROWS, len(res.json()))
+        get_rest_call(self, f'{self.ENDPOINT}/{chan_id}')
+        assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (chan_id,), self.MSG_ROWS)
 
     def test_get_with_invalid_id(self):
-        res = requests.get(f'{self.ENDPOINT}/{self.BAD_ID}')
+        get_rest_call(self, f'{self.ENDPOINT}/{self.BAD_ID}')
+        assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (self.BAD_ID,))
 
-        self.assertEqual(self.SUCCESS, res.status_code)
-        self.assertEqual(self.EMPTY, res.json())
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.conn.close()

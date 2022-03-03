@@ -3,7 +3,7 @@ from unittest import TestCase
 import requests
 
 from src.db.utils import connect, rebuild_tables
-from test.utils import insert_test_data
+from test.utils import reload_test_data
 
 
 class TestMember(TestCase):
@@ -17,13 +17,17 @@ class TestMember(TestCase):
     def setUpClass(cls) -> None:
         cls.conn = connect()
         cls.cur = cls.conn.cursor()
+        rebuild_tables()
 
     def setUp(self) -> None:
-        rebuild_tables()
-        insert_test_data()
+        reload_test_data()
 
     def test_get(self):
         res = requests.get(self.ENDPOINT)
 
         self.assertEqual(self.SUCCESS, res.status_code)
         self.assertEqual(self.ROWS, len(res.json()))
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.conn.close()
