@@ -3,7 +3,7 @@ from unittest import TestCase
 import requests
 
 from src.db.utils import connect, rebuild_tables
-from utils import insert_test_data
+from test.utils import insert_test_data
 
 
 class TestCommunity(TestCase):
