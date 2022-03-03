@@ -1,10 +1,7 @@
-import unittest
 from unittest import TestCase
 
-import requests
-
-from src.db.utils import connect, rebuild_tables, init_db
-from test.utils import reload_test_data
+from src.db.utils import connect, init_db
+from test.utils import reload_test_data, get_rest_call, assert_sql_count
 
 
 class TestCommunity(TestCase):
@@ -25,13 +22,13 @@ class TestCommunity(TestCase):
         self.conn.commit()
 
     def test_get(self):
-        res = requests.get(self.ENDPOINT)
+        # res = requests.get(self.ENDPOINT)
 
-        # get_rest_call(self, self.ENDPOINT)
-        # assert_sql_count(self, sql="SELECT * FROM community", n=self.ROWS)
+        get_rest_call(self, self.ENDPOINT)
+        assert_sql_count(self, sql="SELECT * FROM community", n=self.ROWS)
 
-        self.assertEqual(self.SUCCESS, res.status_code)
-        self.assertEqual(self.ROWS, len(res.json()))
+        # self.assertEqual(self.SUCCESS, res.status_code)
+        # self.assertEqual(self.ROWS, len(res.json()))
 
     @classmethod
     def tearDownClass(cls) -> None:
