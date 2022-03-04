@@ -22,13 +22,8 @@ class TestCommunity(TestCase):
         self.conn.commit()
 
     def test_get(self):
-        # res = requests.get(self.ENDPOINT)
-
-        get_rest_call(self, self.ENDPOINT)
-        assert_sql_count(self, sql="SELECT * FROM community", n=self.ROWS)
-
-        # self.assertEqual(self.SUCCESS, res.status_code)
-        # self.assertEqual(self.ROWS, len(res.json()))
+        res = get_rest_call(self, self.ENDPOINT)
+        assert_sql_count(self, sql="SELECT * FROM community", n=len(res))
 
     @classmethod
     def tearDownClass(cls) -> None:

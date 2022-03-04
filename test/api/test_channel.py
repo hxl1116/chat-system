@@ -24,8 +24,8 @@ class TestChannel(TestCase):
         reload_test_data()
 
     def test_get(self):
-        get_rest_call(self, self.ENDPOINT)
-        assert_sql_count(self, sql="SELECT * FROM channel", n=self.CHAN_ROWS)
+        res = get_rest_call(self, self.ENDPOINT)
+        assert_sql_count(self, sql="SELECT * FROM channel", n=len(res))
 
     def test_get_with_id(self):
         self.cur.execute("""
@@ -33,11 +33,11 @@ class TestChannel(TestCase):
         """, ('worms',))
         chan_id = self.cur.fetchone()[0]
 
-        get_rest_call(self, f'{self.ENDPOINT}/{chan_id}')
-        assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (chan_id,), self.MSG_ROWS)
+        res = get_rest_call(self, f'{self.ENDPOINT}/{chan_id}')
+        assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (chan_id,), len(res))
 
     def test_get_with_invalid_id(self):
-        get_rest_call(self, f'{self.ENDPOINT}/{self.BAD_ID}')
+        res = get_rest_call(self, f'{self.ENDPOINT}/{self.BAD_ID}')
         assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (self.BAD_ID,))
 
     @classmethod

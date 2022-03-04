@@ -21,13 +21,8 @@ class TestMember(TestCase):
         reload_test_data()
 
     def test_get(self):
-        # res = requests.get(self.ENDPOINT)
-
-        get_rest_call(self, self.ENDPOINT)
-        assert_sql_count(self, sql="SELECT * FROM member", n=self.ROWS)
-
-        # self.assertEqual(self.SUCCESS, res.status_code)
-        # self.assertEqual(self.ROWS, len(res.json()))
+        res = get_rest_call(self, self.ENDPOINT)
+        assert_sql_count(self, sql="SELECT * FROM member", n=len(res))
 
     @classmethod
     def tearDownClass(cls) -> None:
