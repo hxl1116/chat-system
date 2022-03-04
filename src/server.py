@@ -4,7 +4,6 @@ from flask_restful import Api
 from api.channel import Channel
 from api.community import Community
 from api.member import Member
-from db.utils import init_db
 
 app = Flask(__name__)
 api = Api(app)
