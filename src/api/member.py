@@ -8,7 +8,6 @@ from db.member import fetch_all_members, fetch_member, delete_member, member_exi
 class Member(Resource):
     @staticmethod
     def get(member_id):
-        # TODO: Check if member exists
         Member.resource_exists(member_id)
         return fetch_member(member_id), ResCode.SUCCESS.value
 
@@ -18,7 +17,6 @@ class Member(Resource):
 
     @staticmethod
     def delete(member_id):
-        # TODO: Check if member exists
         Member.resource_exists(member_id)
         delete_member(member_id)
         return '', ResCode.NO_CONTENT.value
