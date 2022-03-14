@@ -1,5 +1,6 @@
 from flask_restful import Resource
 
+from api.utils import ResCode
 from db.channel import fetch_all_channels
 from db.community import fetch_all_communities
 
@@ -19,4 +20,4 @@ class Community(Resource):
 
             res.append(community)
 
-        return res
+        return res, ResCode.SUCCESS.value
