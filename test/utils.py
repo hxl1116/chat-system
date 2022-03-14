@@ -29,8 +29,8 @@ def post_rest_call(test, url, params=None, expected_code=200):
     return response.json()
 
 
-def del_rest_call(test, url, params=None, expected_code=204):
-    response = requests.delete(url, params)
+def del_rest_call(test, url, expected_code=204):
+    response = requests.delete(url)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
-    return response.json()
+    # return response.json()

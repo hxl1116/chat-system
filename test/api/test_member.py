@@ -34,8 +34,8 @@ class TestMember(TestCase):
 
     def test_delete(self):
         member = self.members[0]
-        res = del_rest_call(self, self.ENDPOINT)
-
+        del_rest_call(self, f'{self.ENDPOINT}/{member[0]}')
+        assert_sql_count(self, sql="SELECT * FROM member", n=len(self.members) - 1)
 
     @classmethod
     def tearDownClass(cls) -> None:

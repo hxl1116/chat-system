@@ -12,6 +12,7 @@ class Member(Resource):
         Member.resource_exists(member_id)
         return fetch_member(member_id), ResCode.SUCCESS.value
 
+    # TODO: Implement and test
     def put(self):
         pass
 
@@ -41,5 +42,6 @@ class MemberList(Resource):
     def get():
         return fetch_all_members()
 
+    # TODO: Implement and test
     def post(self):
         pass
