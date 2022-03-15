@@ -3,6 +3,8 @@ import os
 import psycopg2
 import yaml
 
+from psycopg2.sql import SQL, Identifier
+
 
 def connect():
     yml_path = os.path.join(os.path.dirname(__file__), '../../config/db.yml')
@@ -53,7 +55,11 @@ def fetch_many(sql, args=None):
 def commit(sql, args=None):
     conn = connect()
     cur = conn.cursor()
-    result = cur.execute(sql, args)
+    query = cur.mogrify(sql, args)
+
+    print(f'query: {query}')
+
+    result = cur.execute(query)
     conn.commit()
     conn.close()
 

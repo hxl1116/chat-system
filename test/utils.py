@@ -23,7 +23,7 @@ def get_rest_call(test, url, params=None, expected_code=ResCode.SUCCESS.value):
     return response.json()
 
 
-def put_rest_call(test, url, data=None, expected_code=ResCode.NO_CONTENT.value):
+def put_rest_call(test, url, data=None, expected_code=ResCode.CREATED.value):
     response = requests.put(url, data)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
