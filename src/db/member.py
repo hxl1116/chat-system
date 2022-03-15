@@ -19,10 +19,10 @@ def fetch_all_members():
     """)
 
 
-def insert_member(last, first, user, email, user_change_date):
+def insert_member(last, first, user, email):
     commit("""
-        INSERT INTO member VALUES (last_name=%s, first_name=%s, username=%s, email=%s, username_changed_date=%s)
-    """, (last, first, user, email, user_change_date))
+        INSERT INTO member (last_name, first_name, username, email) VALUES (%s, %s, %s, %s)
+    """, (last, first, user, email))
 
 
 # TODO: Test, generate dynamic query from **kwargs

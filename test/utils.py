@@ -1,5 +1,6 @@
 import requests
 
+from api.utils import ResCode
 from src.db.utils import connect, reload_data
 
 
@@ -15,22 +16,20 @@ def assert_sql_count(test, sql, params=None, n=0, msg='Expected row count did no
     conn.close()
 
 
-def get_rest_call(test, url, params=None, expected_code=200):
+def get_rest_call(test, url, params=None, expected_code=ResCode.SUCCESS.value):
     response = requests.get(url, params)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()
 
 
-def post_rest_call(test, url, params=None, expected_code=200):
+def post_rest_call(test, url, params=None, expected_code=ResCode.CREATED.value):
     response = requests.post(url, params)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()
 
 
-def del_rest_call(test, url, expected_code=204):
+def del_rest_call(test, url, expected_code=ResCode.NO_CONTENT.value):
     response = requests.delete(url)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
-
-    # return response.json()
