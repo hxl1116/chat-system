@@ -1,6 +1,6 @@
 import requests
 
-from api.utils import ResCode
+from src.api.utils import ResCode
 from src.db.utils import connect, reload_data
 
 
