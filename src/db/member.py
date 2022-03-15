@@ -28,8 +28,8 @@ def insert_member(last, first, user, email):
 # TODO: Test, generate dynamic query from **kwargs
 def update_member(id, **kwargs):
     commit("""
-        UPDATE member SET %s = %s WHERE member_id=%s
-    """, )
+        UPDATE member SET (%s) = (%s) WHERE member_id = %s
+    """, (kwargs.keys(), kwargs.values(), id))
 
 
 # TODO: Test

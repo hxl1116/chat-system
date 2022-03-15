@@ -11,9 +11,13 @@ class Member(Resource):
         Member.resource_exists(member_id)
         return fetch_member(member_id), ResCode.SUCCESS.value
 
-    # TODO: Implement and test
-    def put(self):
-        pass
+    @staticmethod
+    def put(member_id, *args, **kwargs):
+        # TODO: Implement and test
+        print(args, kwargs)
+
+        update_member(member_id, **kwargs)
+        return '', ResCode.NO_CONTENT.value
 
     @staticmethod
     def delete(member_id):
