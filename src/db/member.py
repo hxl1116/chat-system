@@ -32,8 +32,6 @@ def insert_member(last, first, user, email):
 
 
 def update_member(id, **kwargs):
-    print(f'kwargs: {kwargs}')
-
     query = SQL("UPDATE member SET ({}) = %s WHERE member_id = %s").format(
         SQL(', ').join(map(Identifier, list(kwargs.keys())))
     )

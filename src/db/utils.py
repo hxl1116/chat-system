@@ -3,8 +3,6 @@ import os
 import psycopg2
 import yaml
 
-from psycopg2.sql import SQL, Identifier
-
 
 def connect():
     yml_path = os.path.join(os.path.dirname(__file__), '../../config/db.yml')
@@ -56,9 +54,6 @@ def commit(sql, args=None):
     conn = connect()
     cur = conn.cursor()
     query = cur.mogrify(sql, args)
-
-    print(f'query: {query}')
-
     result = cur.execute(query)
     conn.commit()
     conn.close()
