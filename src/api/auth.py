@@ -3,7 +3,7 @@ from flask_restful.reqparse import RequestParser
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
-from db.member import member_exists, insert_member
+from db.member import member_exists, get_member_hashword, insert_member
 
 
 class SignUp(Resource):
@@ -41,8 +41,7 @@ class SignUp(Resource):
 class Login(Resource):
     def __init__(self):
         self.parser = RequestParser()
-        self.parser.add_argument('user', type=str, dest='username', required=True,
-                                 help='A username is needed to login.')
+        self.parser.add_argument('email', type=str, required=True, help='A username is needed to login.')
         self.parser.add_argument('pass', type=str, dest='password', required=True,
                                  help='A password is needed to login.')
 
@@ -53,11 +52,9 @@ class Login(Resource):
     def post(self):
         args = self.parser.parse_args()
 
-        # TODO: Compare provided password with member's hashed password
-        if check_password_hash(args['pass'], ''):
-            pass
-
-        # TODO: Handle session stuff
+        if not member_exists(email=args['email']) or not check_password_hash(args['pass'],
+                                                                             get_member_hashword(args['email'])):
+            return {'message': 'Please check your login details and try again'}, ResCode.NOT_FOUND
 
         return {'message': 'Successfully logged in'}, ResCode.SUCCESS
 
@@ -65,6 +62,4 @@ class Login(Resource):
 class Logout(Resource):
     @staticmethod
     def post(member_id):
-        # TODO: Verify member session
-
         return {'message': 'Successfully logged out'}, ResCode.SUCCESS

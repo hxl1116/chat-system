@@ -15,6 +15,12 @@ def member_exists(id=None, email=None):
                             """, (email,)) else False
 
 
+def get_member_hashword(email):
+    return fetch_one("""
+        SELECT password FROM member WHERE email = %s
+    """, (email,))
+
+
 # TODO: Test
 def fetch_member(id):
     return fetch_one("""
