@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_restful import Api
 
+from api.auth import SignUp, Login, Logout
 from api.channel import Channel, ChannelList
 from api.community import Community
 from api.member import Member, MemberList
@@ -33,6 +34,10 @@ def init():
 
     api.add_resource(MemberList, '/members')
     api.add_resource(Member, '/members/<string:member_id>')
+
+    api.add_resource(SignUp, '/signup')
+    api.add_resource(Login, '/login')
+    api.add_resource(Logout, '/logout')
 
 
 def main():

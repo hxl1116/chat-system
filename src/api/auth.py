@@ -1,8 +1,9 @@
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
+from db.member import member_exists, insert_member
 
 
 class SignUp(Resource):
@@ -29,6 +30,10 @@ class SignUp(Resource):
         args['pass'] = generate_password_hash(args['pass'], method='sha256')
 
         # TODO: Check if user exists, otherwise create a new member
+        if member_exists(email=args['email']):
+            insert_member(**args)
+        else:
+            abort(ResCode.CONFLICT, message='A user with that email already exists')
 
         return '', ResCode.CREATED
 

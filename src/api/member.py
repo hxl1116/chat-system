@@ -2,7 +2,7 @@ from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 
 from api.utils import ResCode
-from db.member import fetch_all_members, fetch_member, insert_member, update_member, delete_member, member_exists
+from db.member import fetch_all_members, fetch_member, update_member, delete_member, member_exists
 
 
 class Member(Resource):
@@ -49,9 +49,9 @@ class MemberList(Resource):
     def get():
         return fetch_all_members()
 
-    def post(self):
-        args = self.parser.parse_args()
-
-        insert_member(**args)
-
-        return '', ResCode.CREATED.value
+    # def post(self):
+    #     args = self.parser.parse_args()
+    #
+    #     insert_member(**args)
+    #
+    #     return '', ResCode.CREATED.value

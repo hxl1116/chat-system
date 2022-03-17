@@ -4,10 +4,15 @@ from .utils import commit, fetch_many, fetch_one
 
 
 # TODO: Test
-def member_exists(id):
-    return True if fetch_one("""
-                SELECT 1 FROM member WHERE member_id = %s
-            """, (id,)) else False
+def member_exists(id=None, email=None):
+    if id:
+        return True if fetch_one("""
+                        SELECT 1 FROM member WHERE member_id = %s
+                    """, (id,)) else False
+    if email:
+        return True if fetch_one("""
+                                SELECT 1 FROM member WHERE email = %s
+                            """, (email,)) else False
 
 
 # TODO: Test
