@@ -99,5 +99,7 @@ begin
     if new.username <> old.username then
         update member set username_changed_date = now() where member_id = old.member_id;
     end if;
+
+    return null;
 end;
 $$
