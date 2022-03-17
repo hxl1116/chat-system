@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask_restful.reqparse import RequestParser
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
 
@@ -24,6 +25,9 @@ class SignUp(Resource):
     def post(self):
         args = self.parser.parse_args()
 
+        # Hash password
+        args['pass'] = generate_password_hash(args['pass'], method='sha256')
+
         # TODO: Check if user exists, otherwise create a new member
 
         return '', ResCode.CREATED
@@ -43,6 +47,10 @@ class Login(Resource):
 
     def post(self):
         args = self.parser.parse_args()
+
+        # TODO: Compare provided password with member's hashed password
+        if check_password_hash(args['pass'], ''):
+            pass
 
         # TODO: Handle session stuff
 

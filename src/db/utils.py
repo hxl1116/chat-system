@@ -68,6 +68,7 @@ def rebuild_tables():
 def reload_routines():
     exec_sql_file('../../res/routines/functions.sql')
     exec_sql_file('../../res/routines/procedures.sql')
+    exec_sql_file('../../res/routines/triggers.sql')
 
 
 def reload_data():
