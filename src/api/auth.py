@@ -1,9 +1,9 @@
-from flask_restful import Resource, abort
+from flask_restful import Resource
 from flask_restful.reqparse import RequestParser
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
-from db.member import member_exists, get_member_hashword, insert_member
+from db.member import member_exists, get_member_hashword
 
 
 class SignUp(Resource):
@@ -23,17 +23,17 @@ class SignUp(Resource):
     def get():
         return 'Sign Up', ResCode.SUCCESS
 
+    # TODO: Refactor to use SQLAlchemy
     def post(self):
         args = self.parser.parse_args()
 
         # Hash password
         args['pass'] = generate_password_hash(args['pass'], method='sha256')
 
-        # TODO: Check if user exists, otherwise create a new member
-        if member_exists(email=args['email']):
-            insert_member(**args)
-        else:
-            abort(ResCode.CONFLICT, message='A user with that email already exists')
+        # if member_exists(email=args['email']):
+        #     insert_member(**args)
+        # else:
+        #     abort(ResCode.CONFLICT, message='A user with that email already exists')
 
         return '', ResCode.CREATED
 

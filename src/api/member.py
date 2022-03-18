@@ -16,7 +16,7 @@ class Member(Resource):
     @staticmethod
     def get(member_id):
         from src.db.models.member import Member
-        return Member.fetch_one(member_id).format()
+        return Member.fetch_one(member_id).format(), ResCode.SUCCESS.value
 
     def put(self, member_id):
         # TODO: Refactor to use SQLAlchemy
