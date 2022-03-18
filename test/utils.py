@@ -30,8 +30,8 @@ def put_rest_call(test, url, data=None, expected_code=ResCode.CREATED.value):
     return response.json()
 
 
-def post_rest_call(test, url, data=None, expected_code=ResCode.CREATED.value):
-    response = requests.post(url, data)
+def post_rest_call(test, url, data=None, headers=None, expected_code=ResCode.CREATED.value):
+    response = requests.post(url, data, headers)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()

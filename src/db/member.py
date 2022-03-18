@@ -3,21 +3,33 @@ from psycopg2.sql import Identifier, SQL
 from .utils import commit, fetch_many, fetch_one
 
 
-def member_exists(id=None, email=None):
+def member_exists(id=None, user=None):
     if id:
         return True if fetch_one("""
                         SELECT 1 FROM member WHERE member_id = %s
                     """, (id,)) else False
-    if email:
+    if user:
         return True if fetch_one("""
-                                SELECT 1 FROM member WHERE email = %s
-                            """, (email,)) else False
+                                SELECT 1 FROM member WHERE username = %s
+                            """, (user,)) else False
 
 
-def get_member_hashword(email):
+def get_member_hashword(user):
     return fetch_one("""
-        SELECT password FROM member WHERE email = %s
-    """, (email,))
+        SELECT password FROM member WHERE username = %s
+    """, (user,))
+
+
+def validate_session(user, session):
+    return True if fetch_one("""
+        SELECT 1 FROM member WHERE username = %s AND session_key = %s
+    """, (user, session)) else False
+
+
+def nullify_session(user):
+    commit("""
+        UPDATE member SET session_key = null, session_expire = null WHERE username = %s
+    """, (user,))
 
 
 # TODO: Test
@@ -48,10 +60,10 @@ def update_member(id, **kwargs):
     commit(query, (tuple(kwargs.values()), id))
 
 
-def update_member_session(email, session_key, session_expire):
+def update_member_session(user, session_key, session_expire):
     commit("""
-        UPDATE member SET (session_key, session_expire) = (%s, %s) WHERE email = %s
-    """, (session_key, session_expire, email))
+        UPDATE member SET (session_key, session_expire) = (%s, %s) WHERE username = %s
+    """, (session_key, session_expire, user))
 
 
 # TODO: Test
