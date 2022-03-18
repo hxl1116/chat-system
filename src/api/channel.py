@@ -20,6 +20,6 @@ class Channel(Resource):
 class ChannelList(Resource):
     @staticmethod
     def get():
-        from src.db.models.channel import Channel
+        from db.models.channel import Channel
 
         return [row.format() for row in Channel.fetch_all()], ResCode.SUCCESS.value
