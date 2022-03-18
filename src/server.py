@@ -1,6 +1,6 @@
 from flask import render_template
 
-from src import create_app
+from src import create_app, db
 
 nav_links = [
     {'href': '/communities', 'name': 'communities'},
@@ -17,6 +17,7 @@ def home():
 
 
 def main():
+    db.init_app(app)
     app.run(debug=True)
 
 

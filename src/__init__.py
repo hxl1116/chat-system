@@ -43,8 +43,6 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_uri(db_cfg, app_cfg)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db.init_app(app)
-
     auth_bp = Blueprint('auth', __name__)
     auth_api = Api(auth_bp)
 

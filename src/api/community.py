@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from api.utils import ResCode
+from src.api.utils import ResCode
 
 
 class Community(Resource):
