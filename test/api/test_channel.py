@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.db.utils import connect, init_db
+from db.utils import connect, init_db
 from test.utils import reload_test_data, get_rest_call, assert_sql_count
 
 

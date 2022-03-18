@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase
 
-from src.db.member import fetch_all_members
-from src.db.utils import connect, init_db
+from db.member import fetch_all_members
+from db.utils import connect, init_db
 from test.utils import reload_test_data, assert_sql_count, get_rest_call, put_rest_call, post_rest_call, del_rest_call
 
 
