@@ -1,6 +1,6 @@
 from flask import render_template
 
-from src import create_app, db
+# from src import create_app, db
 from . import *
 
 nav_links = [
