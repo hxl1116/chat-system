@@ -2,7 +2,7 @@ from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 
 from api.utils import ResCode
-from db.member import fetch_all_members, fetch_member, update_member, delete_member, member_exists
+from db.member import update_member, delete_member, member_exists
 
 
 class Member(Resource):
@@ -16,11 +16,10 @@ class Member(Resource):
     @staticmethod
     def get(member_id):
         from src.db.models.member import Member
-        # Member.resource_exists(member_id)
-        # return fetch_member(member_id), ResCode.SUCCESS.value
         return Member.fetch_one(member_id).format()
 
     def put(self, member_id):
+        # TODO: Refactor to use SQLAlchemy
         args = self.parser.parse_args()
 
         update_member(member_id, **args)
@@ -28,6 +27,7 @@ class Member(Resource):
 
     @staticmethod
     def delete(member_id):
+        # TODO: Refactor to use SQLAlchemy
         Member.resource_exists(member_id)
         delete_member(member_id)
         return '', ResCode.NO_CONTENT.value
