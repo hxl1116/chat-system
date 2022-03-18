@@ -24,3 +24,4 @@ six==1.14.0
 wcwidth==0.1.8
 Werkzeug==1.0.0
 zipp==3.0.0
+SQLAlchemy~=1.4.32

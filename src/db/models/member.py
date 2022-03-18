@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from sqlalchemy.dialects.postgresql import UUID
 
-from src import db
+from server import db
 
 
 class Member(db.Model):
