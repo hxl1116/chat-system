@@ -3,7 +3,7 @@ from flask_restful.reqparse import RequestParser
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
-from db.member import member_exists, get_member_hashword, insert_member
+from db.member import member_exists, get_member_hashword, insert_member, update_member_session
 
 
 class SignUp(Resource):
@@ -19,17 +19,11 @@ class SignUp(Resource):
                                  help='A last name is required to signup.')
         self.parser.add_argument('email', type=str, required=True, help='An email is required to signup.')
 
-    @staticmethod
-    def get():
-        return 'Sign Up', ResCode.SUCCESS.value
-
     def post(self):
         args = self.parser.parse_args()
 
         # Hash password
-        args['password'] = generate_password_hash(args['password'], method='sha256')
-
-        print(member_exists(email=args['email']))
+        args['password'] = generate_password_hash(args['password'], method='sha512')
 
         if not member_exists(email=args['email']):
             insert_member(**args)
@@ -46,18 +40,24 @@ class Login(Resource):
         self.parser.add_argument('pass', type=str, dest='password', required=True,
                                  help='A password is needed to login.')
 
-    @staticmethod
-    def get():
-        return 'Login', ResCode.SUCCESS.value
-
     def post(self):
+        from secrets import token_urlsafe
+        from datetime import datetime, timedelta
+
         args = self.parser.parse_args()
 
-        if not member_exists(email=args['email']) or not check_password_hash(args['pass'],
-                                                                             get_member_hashword(args['email'])):
+        hashword = get_member_hashword(args['email'])['password']
+        password = args['password']
+
+        if not member_exists(email=args['email']) or not check_password_hash(hashword, password):
             return {'message': 'Please check your login details and try again'}, ResCode.NOT_FOUND.value
 
-        return {'message': 'Successfully logged in'}, ResCode.SUCCESS.value
+        session_data = {'session_key': token_urlsafe(),
+                        'session_expire': str(datetime.today() + timedelta(days=2))}
+
+        update_member_session(args['email'], session_data['session_key'], session_data['session_expire'])
+
+        return session_data, ResCode.CREATED.value
 
 
 class Logout(Resource):

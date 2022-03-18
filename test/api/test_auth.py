@@ -25,9 +25,14 @@ class TestAuth(TestCase):
         post_rest_call(test=self, url=SIGNUP_ENDPOINT, data=self.params)
         assert_sql_count(test=self, sql="SELECT * FROM member", n=len(fetch_all_members()))
 
-    @unittest.skip('not implemented')
     def test_login(self):
-        pass
+        # Create the member
+        post_rest_call(test=self, url=SIGNUP_ENDPOINT, data=self.params)
+
+        # Login with member
+        post_rest_call(test=self, url=LOGIN_ENDPOINT, data={'email': self.params['email'], 'pass': self.params['pass']})
+
+        assert_sql_count(test=self, sql="SELECT * FROM member", n=len(fetch_all_members()))
 
     @unittest.skip('not implemented')
     def test_logout(self):
