@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from src.api.utils import ResCode
+from api.utils import ResCode
 
 
 class Channel(Resource):

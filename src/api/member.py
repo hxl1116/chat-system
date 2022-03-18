@@ -1,7 +1,7 @@
 from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 
-from src.api.utils import ResCode
+from api.utils import ResCode
 from src.db.member import update_member, delete_member, member_exists
 
 
