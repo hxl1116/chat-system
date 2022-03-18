@@ -12,7 +12,7 @@ def connect():
 
     return psycopg2.connect(dbname=config['database'],
                             user=config['user'],
-                            password=config['password'],
+                            password=config['pass'],
                             host=config['host'],
                             port=config['port'])
 

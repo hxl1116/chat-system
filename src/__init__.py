@@ -4,7 +4,7 @@ from flask import Flask, Blueprint
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from api.member import MemberList, Member
+from src.api.member import MemberList, Member
 from src.api.channel import ChannelList, Channel
 from src.api.community import Community
 

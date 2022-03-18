@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from sqlalchemy.dialects.postgresql import UUID
 
-from src.server import db
+from src import db
 
 
 class Community(db.Model):

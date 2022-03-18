@@ -4,6 +4,8 @@ from flask_restful.reqparse import RequestParser
 from api.utils import ResCode
 from db.member import update_member, delete_member, member_exists
 
+from src import db
+
 
 class Member(Resource):
     def __init__(self):
@@ -30,6 +32,9 @@ class Member(Resource):
         # TODO: Refactor to use SQLAlchemy
         Member.resource_exists(member_id)
         delete_member(member_id)
+
+        db.session.commit()
+
         return '', ResCode.NO_CONTENT.value
 
     @staticmethod
