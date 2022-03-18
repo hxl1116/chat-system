@@ -35,16 +35,15 @@ def fetch_all_members():
 
 
 # TODO: Test
-def insert_member(last, first, user, email):
+def insert_member(**kwargs):
     commit("""
-        INSERT INTO member (last_name, first_name, username, email) VALUES (%s, %s, %s, %s)
-    """, (last, first, user, email))
+        INSERT INTO member (last_name, first_name, username, password, email) VALUES (%s, %s, %s, %s, %s)
+    """, tuple(kwargs.values()))
 
 
 def update_member(id, **kwargs):
     query = SQL("UPDATE member SET ({}) = %s WHERE member_id = %s").format(
-        SQL(', ').join(map(Identifier, list(kwargs.keys())))
-    )
+        SQL(', ').join(map(Identifier, list(kwargs.keys()))))
 
     commit(query, (tuple(kwargs.values()), id))
 

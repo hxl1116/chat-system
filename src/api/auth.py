@@ -1,9 +1,9 @@
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.utils import ResCode
-from db.member import member_exists, get_member_hashword
+from db.member import member_exists, get_member_hashword, insert_member
 
 
 class SignUp(Resource):
@@ -21,20 +21,22 @@ class SignUp(Resource):
 
     @staticmethod
     def get():
-        return 'Sign Up', ResCode.SUCCESS
+        return 'Sign Up', ResCode.SUCCESS.value
 
     def post(self):
         args = self.parser.parse_args()
 
         # Hash password
-        args['pass'] = generate_password_hash(args['pass'], method='sha256')
+        args['password'] = generate_password_hash(args['password'], method='sha256')
 
-        # if member_exists(email=args['email']):
-        #     insert_member(**args)
-        # else:
-        #     abort(ResCode.CONFLICT, message='A user with that email already exists')
+        print(member_exists(email=args['email']))
 
-        return '', ResCode.CREATED
+        if not member_exists(email=args['email']):
+            insert_member(**args)
+        else:
+            abort(ResCode.CONFLICT.value, message='A user with that email already exists')
+
+        return '', ResCode.CREATED.value
 
 
 class Login(Resource):
@@ -46,19 +48,19 @@ class Login(Resource):
 
     @staticmethod
     def get():
-        return 'Login', ResCode.SUCCESS
+        return 'Login', ResCode.SUCCESS.value
 
     def post(self):
         args = self.parser.parse_args()
 
         if not member_exists(email=args['email']) or not check_password_hash(args['pass'],
                                                                              get_member_hashword(args['email'])):
-            return {'message': 'Please check your login details and try again'}, ResCode.NOT_FOUND
+            return {'message': 'Please check your login details and try again'}, ResCode.NOT_FOUND.value
 
-        return {'message': 'Successfully logged in'}, ResCode.SUCCESS
+        return {'message': 'Successfully logged in'}, ResCode.SUCCESS.value
 
 
 class Logout(Resource):
     @staticmethod
     def post(member_id):
-        return {'message': 'Successfully logged out'}, ResCode.SUCCESS
+        return {'message': 'Successfully logged out'}, ResCode.SUCCESS.value

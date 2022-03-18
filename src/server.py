@@ -1,6 +1,7 @@
 from flask import render_template, Flask
 from flask_restful import Api
 
+from api.auth import SignUp, Login, Logout
 from api.channel import ChannelList, Channel
 from api.community import Community
 from api.member import MemberList, Member
@@ -8,7 +9,10 @@ from api.member import MemberList, Member
 nav_links = [
     {'href': '/communities', 'name': 'communities'},
     {'href': '/channels', 'name': 'channels'},
-    {'href': '/members', 'name': 'members'}
+    {'href': '/members', 'name': 'members'},
+    {'href': '/signup', 'name': 'signup'},
+    {'href': '/login', 'name': 'login'},
+    {'href': '/logout', 'name': 'logout'}
 ]
 
 DB_CFG = '../config/db.yml'
@@ -31,6 +35,10 @@ def init():
 
     api.add_resource(MemberList, '/members')
     api.add_resource(Member, '/members/<string:member_id>')
+
+    api.add_resource(SignUp, '/signup')
+    api.add_resource(Login, '/login')
+    api.add_resource(Logout, '/logout')
 
 
 def main():
