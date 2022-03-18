@@ -15,8 +15,10 @@ class Member(Resource):
 
     @staticmethod
     def get(member_id):
-        Member.resource_exists(member_id)
-        return fetch_member(member_id), ResCode.SUCCESS.value
+        from src.db.models.member import Member
+        # Member.resource_exists(member_id)
+        # return fetch_member(member_id), ResCode.SUCCESS.value
+        return Member.fetch_one(member_id).format()
 
     def put(self, member_id):
         args = self.parser.parse_args()
@@ -47,11 +49,6 @@ class MemberList(Resource):
 
     @staticmethod
     def get():
-        return fetch_all_members()
+        from src.db.models.member import Member
 
-    # def post(self):
-    #     args = self.parser.parse_args()
-    #
-    #     insert_member(**args)
-    #
-    #     return '', ResCode.CREATED.value
+        return [member.format() for member in Member.fetch_all()], ResCode.SUCCESS.value

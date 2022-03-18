@@ -13,9 +13,5 @@ class Community(db.Model):
     def fetch_all():
         return Community.query.all()
 
-    @staticmethod
-    def fetch_one(id):
-        return Community.query.filter(community_id=id).first()
-
     def format(self):
         return {col.name: getattr(self, col.name) for col in self.__table__.columns}

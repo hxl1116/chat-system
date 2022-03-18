@@ -4,8 +4,9 @@ from flask import Flask, Blueprint
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from src.api.community import Community
+from api.member import MemberList, Member
 from src.api.channel import ChannelList, Channel
+from src.api.community import Community
 
 DB_CFG = '../config/db.yml'
 APP_CFG = '../config/app.yml'
@@ -57,6 +58,9 @@ def create_app():
     main_api.add_resource(Channel, '/channels/<string:chan_id>')
 
     main_api.add_resource(Community, '/communities')
+
+    main_api.add_resource(MemberList, '/members')
+    main_api.add_resource(Member, '/members/<string:member_id>')
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
