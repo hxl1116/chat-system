@@ -6,7 +6,7 @@ from api.utils import ResCode
 class Channel(Resource):
     @staticmethod
     def get(chan_id):
-        from src.db.models.message import Message
+        from db.models.message import Message
         # TODO: Check if channel exists
 
         msgs = [msg.format() for msg in Message.fetch_all(chan_id)]
