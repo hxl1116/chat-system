@@ -2,6 +2,7 @@ import os
 
 import psycopg2
 import yaml
+from psycopg2.extras import RealDictCursor
 
 
 def connect():
@@ -32,7 +33,7 @@ def exec_sql_file(path):
 
 def fetch_one(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute(sql, args)
     one = cur.fetchone()
     conn.close()
@@ -42,7 +43,7 @@ def fetch_one(sql, args=None):
 
 def fetch_many(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute(sql, args)
     list_of_tuples = cur.fetchall()
     conn.close()
@@ -52,7 +53,7 @@ def fetch_many(sql, args=None):
 
 def commit(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     query = cur.mogrify(sql, args)
     result = cur.execute(query)
     conn.commit()

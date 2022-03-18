@@ -23,7 +23,6 @@ class SignUp(Resource):
     def get():
         return 'Sign Up', ResCode.SUCCESS
 
-    # TODO: Refactor to use SQLAlchemy
     def post(self):
         args = self.parser.parse_args()
 

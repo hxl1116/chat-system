@@ -41,7 +41,7 @@ class TestMember(TestCase):
 
     def test_update_member(self):
         test_data = {
-            'id': self.members[0][0],
+            'id': self.members[0]['member_id'],
             'last_name': 'Larson',
             'first_name': 'Henry',
             'username': 'chicken_wing',

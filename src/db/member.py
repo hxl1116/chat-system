@@ -3,7 +3,6 @@ from psycopg2.sql import Identifier, SQL
 from .utils import commit, fetch_many, fetch_one
 
 
-# TODO: Migrate to model
 def member_exists(id=None, email=None):
     if id:
         return True if fetch_one("""
@@ -15,7 +14,6 @@ def member_exists(id=None, email=None):
                             """, (email,)) else False
 
 
-# TODO: Migrate to model
 def get_member_hashword(email):
     return fetch_one("""
         SELECT password FROM member WHERE email = %s

@@ -2,15 +2,15 @@ from flask_restful import Resource
 
 from api.utils import ResCode
 
+from db.channel import fetch_all_channels
+from db.community import fetch_all_communities
+
 
 class Community(Resource):
     @staticmethod
     def get():
-        from db.models.channel import Channel
-        from db.models.community import Community
-
-        communities = [comm.format() for comm in Community.fetch_all()]
-        channels = [chan.format() for chan in Channel.fetch_all()]
+        communities = fetch_all_communities()
+        channels = fetch_all_channels()
 
         for comm in communities:
             comm['channels'] = []

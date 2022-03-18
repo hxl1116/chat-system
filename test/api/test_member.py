@@ -41,12 +41,12 @@ class TestMember(TestCase):
 
     def test_put(self):
         member = self.members[0]
-        put_rest_call(self, f'{self.ENDPOINT}/{member[0]}', data=self.params)
+        put_rest_call(self, f'{self.ENDPOINT}/{member["member_id"]}', data=self.params)
         assert_sql_count(self, sql="SELECT * FROM member", n=len(self.members))
 
     def test_delete(self):
         member = self.members[0]
-        del_rest_call(self, f'{self.ENDPOINT}/{member[0]}')
+        del_rest_call(self, f'{self.ENDPOINT}/{member["member_id"]}')
         assert_sql_count(self, sql="SELECT * FROM member", n=len(self.members) - 1)
 
     @classmethod
