@@ -3,9 +3,35 @@ import requests
 from src.api.utils import ResCode
 from src.db.utils import connect, reload_data
 
+TEST_MEMBER = {
+    'user': 'lab-rat',
+    'pass': 'Str0ngP@ssword22',
+    'first': 'Johnny',
+    'last': 'Test',
+    'email': 'johnny@test.com'
+}
+
+BAD_ID = '00000000-0000-0000-0000-000000000000'
+
+SIGNUP_ENDPOINT = 'http://127.0.0.1:5000/signup'
+LOGIN_ENDPOINT = 'http://127.0.0.1:5000/login'
+COMMUNITIES_ENDPOINT = 'http://127.0.0.1:5000/communities'
+CHANNELS_ENDPOINT = 'http://127.0.0.1:5000/channels'
+MEMBERS_ENDPOINT = 'http://127.0.0.1:5000/members'
+
 
 def reload_test_data():
     reload_data()
+
+
+def signup_test_member():
+    # Create test member
+    requests.post(SIGNUP_ENDPOINT, data=TEST_MEMBER)
+
+
+def login_test_member():
+    # Login as test member
+    return requests.post(LOGIN_ENDPOINT, data={'user': TEST_MEMBER['user'], 'pass': TEST_MEMBER['pass']})
 
 
 def assert_sql_count(test, sql, params=None, n=0, msg='Expected row count did not match query'):
