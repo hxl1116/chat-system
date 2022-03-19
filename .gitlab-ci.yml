@@ -19,7 +19,7 @@ before_script:
 
 testrunner:
   script:
-     - python -m unittest -v # run the unit tests; -v prints the test being run
+    - python -m unittest -v # run the unit tests; -v prints the test being run
 
     # - pytest # optional, use instead of unittest. friendlier output.
 

@@ -29,9 +29,13 @@ class TestChannel(TestCase):
         assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (channel["channel_id"],), len(res))
 
     def test_get_with_invalid_id(self):
-        get_rest_call(self, f'{CHANNELS_ENDPOINT}/{BAD_ID}',
+        res = get_rest_call(self, f'{CHANNELS_ENDPOINT}/{BAD_ID}',
                       headers={'Session-Key': self.session_key, 'member': TEST_MEMBER['user']},
                       expected_code=ResCode.CONFLICT.value)
+
+        # Show error message
+        print(res)
+
         assert_sql_count(self, "SELECT * FROM message WHERE channel_id = %s", (BAD_ID,))
 
     @classmethod
