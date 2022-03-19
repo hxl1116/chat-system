@@ -1,0 +1,2 @@
+secret_key: dev
+db_uri: postgresql+psycopg2://<user>:<pass>@<host>:<port>/<dbname>

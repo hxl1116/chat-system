@@ -68,26 +68,38 @@ begin
 end
 $$;
 
--- Get a list of suspended members who have sent a message within a given date range
--- FIXME: Returns no member ids
-create or replace function get_suspended_msg_senders(start_date date, end_date date) returns uuid[]
+-- -- Get a list of suspended members who have sent a message within a given date range
+-- -- FIXME: Returns no member ids
+-- create or replace function get_suspended_msg_senders(start_date date, end_date date) returns uuid[]
+--     language plpgsql as
+-- $$
+-- declare
+--     record  record;
+--     members uuid[];
+-- begin
+--     for record in select member_id, community_id
+--                   from membership,
+--                        message
+--                   where sender_id = member_id
+--                     and timestamp between start_date and end_date
+--         loop
+--             if is_suspended(member_id := record.member_id, community_id := record.community_id) then
+--                 members = members || record.member_id;
+--             end if;
+--         end loop;
+--
+--     return members;
+-- end
+-- $$;
+
+create or replace function handle_username_change() returns trigger
     language plpgsql as
 $$
-declare
-    record  record;
-    members uuid[];
 begin
-    for record in select member_id, community_id
-                  from membership,
-                       message
-                  where sender_id = member_id
-                    and timestamp between start_date and end_date
-        loop
-            if is_suspended(member_id := record.member_id, community_id := record.community_id) then
-                members = members || record.member_id;
-            end if;
-        end loop;
+    if new.username <> old.username then
+        update member set username_changed_date = now() where member_id = old.member_id;
+    end if;
 
-    return members;
-end
-$$;
+    return null;
+end;
+$$

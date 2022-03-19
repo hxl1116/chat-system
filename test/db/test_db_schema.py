@@ -5,13 +5,6 @@ from test.utils import *
 
 
 class TestDBSchema(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        pass
-
-    def setUp(self) -> None:
-        pass
-
     def test_rebuild_tables(self):
         """Rebuild the tables"""
         rebuild_tables()
