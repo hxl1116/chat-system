@@ -54,8 +54,7 @@ def fetch_many(sql, args=None):
 def commit(sql, args=None):
     conn = connect()
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    query = cur.mogrify(sql, args)
-    result = cur.execute(query)
+    result = cur.execute(sql, args)
     conn.commit()
     conn.close()
 

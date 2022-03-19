@@ -5,7 +5,7 @@ from api.auth import SignUp, Login, Logout
 from api.channel import ChannelList, Channel
 from api.community import Community
 from api.member import MemberList, Member
-from api.messages.direct import Direct
+from api.messages.direct import DirectList, Direct
 from db.utils import init_db
 
 nav_links = [
@@ -36,6 +36,7 @@ def init_app():
 
     api.add_resource(Community, '/communities')
 
+    api.add_resource(DirectList, '/dms')
     api.add_resource(Direct, '/dms/<string:username>')
 
     api.add_resource(MemberList, '/members')

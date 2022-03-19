@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from src.api.utils import ResCode
-from db.member import fetch_all_members
+from src.db.member import fetch_all_members
 from test.utils import reload_test_data, post_rest_call, assert_sql_count
 
 SIGNUP_ENDPOINT = 'http://127.0.0.1:5000/signup'

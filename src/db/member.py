@@ -1,6 +1,6 @@
 from psycopg2.sql import Identifier, SQL
 
-from db.utils import commit, fetch_many, fetch_one
+from .utils import commit, fetch_many, fetch_one
 
 
 def member_exists(id=None, user=None):
@@ -32,10 +32,16 @@ def nullify_session(user):
     """, (user,))
 
 
-def fetch_member(id):
-    return fetch_one("""
-        SELECT * FROM member WHERE member_id = %s
-    """, (id,))
+def fetch_member(id=None, user=None):
+    if id:
+        return fetch_one("""
+            SELECT * FROM member WHERE member_id = %s
+        """, (id,))
+
+    if user:
+        return fetch_one("""
+            SELECT * FROM member WHERE username = %s
+        """, (user,))
 
 
 def fetch_all_members():

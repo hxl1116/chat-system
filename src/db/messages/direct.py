@@ -1,4 +1,4 @@
-from db.utils import commit, fetch_many, fetch_one
+from ..utils import commit, fetch_many, fetch_one
 
 
 def fetch_dm(id):
@@ -9,14 +9,14 @@ def fetch_dm(id):
 
 def fetch_many_dms(user, limit):
     return fetch_many("""
-        SELECT *
+        SELECT message_id, sender_id, receiver_id, content, unread, timestamp
         FROM direct_message,
              member
         WHERE username = %s
           AND (sender_id = member_id OR receiver_id = member_id)
         LIMIT %s
     """, (user, limit)) if limit else fetch_many("""
-        SELECT *
+        SELECT message_id, sender_id, receiver_id, content, unread, timestamp
         FROM direct_message,
              member
         WHERE username = %s
