@@ -1,6 +1,8 @@
 import unittest
 from unittest import TestCase
 
+import requests
+
 from src.db.member import fetch_all_members
 from test.utils import reload_test_data, assert_sql_count, get_rest_call, put_rest_call, post_rest_call, del_rest_call
 
@@ -18,6 +20,8 @@ class TestMember(TestCase):
             'user': 'chicken_wing',
             'email': 'hxl1116@g.rit.edu'
         }
+
+        requests.post(MEMBERS_ENDPOINT, data={'member': self.params['user']}, headers={''})
 
     def test_get(self):
         res = get_rest_call(self, MEMBERS_ENDPOINT)
