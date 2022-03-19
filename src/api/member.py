@@ -15,7 +15,7 @@ class Base:
     @staticmethod
     def authorize(args):
         # Check session key
-        if not validate_session(user=['member'], session=args['session_key']):
+        if not validate_session(user=args['member'], session=args['session_key']):
             abort(ResCode.CONFLICT.value, message='A member with that username is not logged in.')
 
 
@@ -43,9 +43,6 @@ class Member(Resource, Base):
         member = fetch_member(member_id)
 
         return member, ResCode.SUCCESS.value
-
-    def post(self):
-        pass
 
     def put(self, member_id):
         args = self.put_parser.parse_args()
@@ -77,14 +74,17 @@ class MemberList(Resource, Base):
                                  help='A member\'s username is needed for this action.')
 
     def get(self):
-        # args = self.parser.parse_args()
+        args = self.parser.parse_args()
 
-        # self.authorize(args)
+        print(args)
+
+        self.authorize(args)
 
         # Get all members from the db
         members = fetch_all_members()
 
         # Cast 'username_changed_date' field to 'str' type for each record
-        members = [{**member, 'username_changed_date': str(member['username_changed_date'])} for member in members]
+        members = [{**member, 'username_changed_date': str(member['username_changed_date']),
+                    'session_expire': str(member['session_expire'])} for member in members]
 
         return members, ResCode.SUCCESS.value

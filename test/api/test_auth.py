@@ -30,7 +30,8 @@ class TestAuth(TestCase):
         post_rest_call(test=self, url=SIGNUP_ENDPOINT, data=self.params)
 
         # Login with member
-        post_rest_call(test=self, url=LOGIN_ENDPOINT, data={'user': self.params['user'], 'pass': self.params['pass']})
+        post_rest_call(test=self, url=LOGIN_ENDPOINT, data={'user': self.params['user'], 'pass': self.params['pass']},
+                       expected_code=ResCode.SUCCESS.value)
 
         assert_sql_count(test=self, sql="SELECT * FROM member", n=len(fetch_all_members()))
 
@@ -40,8 +41,10 @@ class TestAuth(TestCase):
         post_rest_call(test=self, url=SIGNUP_ENDPOINT, data=self.params)
 
         # Login the member
-        res = post_rest_call(test=self, url=LOGIN_ENDPOINT,
-                             data={'user': self.params['user'], 'pass': self.params['pass']})
+        res = post_rest_call(test=self,
+                             url=LOGIN_ENDPOINT,
+                             data={'user': self.params['user'], 'pass': self.params['pass']},
+                             expected_code=ResCode.SUCCESS.value)
 
         # Log out the member
         post_rest_call(test=self,

@@ -16,27 +16,27 @@ def assert_sql_count(test, sql, params=None, n=0, msg='Expected row count did no
     conn.close()
 
 
-def get_rest_call(test, url, params=None, expected_code=ResCode.SUCCESS.value):
-    response = requests.get(url, params)
+def get_rest_call(test, url, params=None, headers=None, expected_code=ResCode.SUCCESS.value):
+    response = requests.get(url, params, headers=headers)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()
 
 
-def put_rest_call(test, url, data=None, expected_code=ResCode.CREATED.value):
-    response = requests.put(url, data)
+def put_rest_call(test, url, data=None, headers=None, expected_code=ResCode.CREATED.value):
+    response = requests.put(url, data, headers=headers)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()
 
 
 def post_rest_call(test, url, data=None, headers=None, expected_code=ResCode.CREATED.value):
-    response = requests.post(url, data, headers)
+    response = requests.post(url, data, headers=headers)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')
 
     return response.json()
 
 
-def del_rest_call(test, url, expected_code=ResCode.NO_CONTENT.value):
-    response = requests.delete(url)
+def del_rest_call(test, url, headers=None, expected_code=ResCode.NO_CONTENT.value):
+    response = requests.delete(url, headers=headers)
     test.assertEqual(expected_code, response.status_code, f'Response code to {url} not {expected_code}')

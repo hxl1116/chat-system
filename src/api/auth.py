@@ -59,7 +59,7 @@ class Login(Resource):
 
         update_member_session(args['username'], session_data['session_key'], session_data['session_expire'])
 
-        return session_data, ResCode.CREATED.value
+        return session_data, ResCode.SUCCESS.value
 
 
 class Logout(Resource):
