@@ -5,11 +5,13 @@ from api.auth import SignUp, Login, Logout
 from api.channel import ChannelList, Channel
 from api.community import Community
 from api.member import MemberList, Member
+from api.messages.direct import Direct
 from db.utils import init_db
 
 nav_links = [
     {'href': '/communities', 'name': 'communities'},
     {'href': '/channels', 'name': 'channels'},
+    {'href': '/dms', 'name': 'direct messages'},
     {'href': '/members', 'name': 'members'},
     {'href': '/signup', 'name': 'signup'},
     {'href': '/login', 'name': 'login'},
@@ -33,6 +35,8 @@ def init_app():
     api.add_resource(Channel, '/channels/<string:channel_id>')
 
     api.add_resource(Community, '/communities')
+
+    api.add_resource(Direct, '/dms/<string:username>')
 
     api.add_resource(MemberList, '/members')
     api.add_resource(Member, '/members/<string:member_id>')

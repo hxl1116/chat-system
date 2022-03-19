@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.db.member import fetch_all_members
+from db.member import fetch_all_members
 from test.utils import TEST_MEMBER, MEMBERS_ENDPOINT, signup_test_member, login_test_member, reload_test_data, \
     assert_sql_count, get_rest_call, put_rest_call, del_rest_call
 

@@ -46,8 +46,7 @@ class Member(Resource, BaseMember):
         self.validate(member_id)
         self.authorize(args)
 
-        args.pop('session_key')
-        args.pop('member')
+        args = self.clean_auth(args)
 
         update_member(member_id, **args)
 

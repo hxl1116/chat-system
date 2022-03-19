@@ -4,7 +4,7 @@ from flask_restful.reqparse import RequestParser
 from api.base import Base
 from api.utils import ResCode
 from db.channel import channel_exists, fetch_all_channels
-from db.message import fetch_all_messages
+from db.messages.standard import fetch_all_messages
 
 
 class BaseChannel(Base):

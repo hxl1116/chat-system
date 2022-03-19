@@ -1,6 +1,6 @@
 from psycopg2.sql import Identifier, SQL
 
-from .utils import commit, fetch_many, fetch_one
+from db.utils import commit, fetch_many, fetch_one
 
 
 def member_exists(id=None, user=None):
@@ -32,21 +32,18 @@ def nullify_session(user):
     """, (user,))
 
 
-# TODO: Test
 def fetch_member(id):
     return fetch_one("""
         SELECT * FROM member WHERE member_id = %s
     """, (id,))
 
 
-# TODO: Test
 def fetch_all_members():
     return fetch_many("""
         SELECT * FROM member
     """)
 
 
-# TODO: Test
 def insert_member(**kwargs):
     commit("""
         INSERT INTO member (username, password, last_name, first_name, email) VALUES (%s, %s, %s, %s, %s)
@@ -66,7 +63,6 @@ def update_member_session(user, session_key, session_expire):
     """, (session_key, session_expire, user))
 
 
-# TODO: Test
 def delete_member(id):
     commit("""
         DELETE FROM member WHERE member_id = %s
