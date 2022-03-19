@@ -5,6 +5,7 @@ from api.auth import SignUp, Login, Logout
 from api.channel import ChannelList, Channel
 from api.community import Community
 from api.member import MemberList, Member
+from db.utils import init_db
 
 nav_links = [
     {'href': '/communities', 'name': 'communities'},
@@ -27,7 +28,7 @@ def home():
     return render_template('home.html', nav=nav_links)
 
 
-def init():
+def init_app():
     api.add_resource(ChannelList, '/channels')
     api.add_resource(Channel, '/channels/<string:channel_id>')
 
@@ -42,7 +43,8 @@ def init():
 
 
 def main():
-    init()
+    init_db()
+    init_app()
 
     app.run(debug=True)
 
