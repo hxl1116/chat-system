@@ -24,6 +24,15 @@ This phase also included unit tests to ensure proper functionality.
 
 ## REST2: CRUD & Authentication
 
-_Currently a work in progress_
+This phase introduced more API functions including user authorization and additional ways for members to interact.
+Authorization functionality was implemented with the use of session keys.
 
-[//]: # (TODO: Update with REST2)
+Additional endpoints include:
+
+- `/signup` - allows a user to sign up for the Chat System
+- `/login` - allows an existing `member` to login to the Chat System
+- `/logout` - allows a logged in `member` to log out of the Chat System
+- `/dms/{username}?limit` - gets all `direct_message` data for a `member`
+  - Optional use of the `limit` parameter to return a specific number of messages
+
+All endpoints (besides `/signup` and `/login`) that perform CRUD operations now require a user to be authorized.
