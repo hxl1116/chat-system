@@ -145,6 +145,7 @@ declare
     larry_id    uuid = uuid_generate_v4();
     paul_id     uuid = uuid_generate_v4();
     chani_id    uuid = uuid_generate_v4();
+    test_id     uuid = uuid_generate_v4();
 
 begin
     insert into member (member_id, last_name, first_name, username, email)

@@ -39,11 +39,14 @@ CREATE TABLE direct_message
 CREATE TABLE IF NOT EXISTS member
 (
     member_id             uuid primary key default uuid_generate_v4(),
+    username              varchar(255) not null,
+    password              varchar(225),
     last_name             varchar(255) not null,
     first_name            varchar(255) not null,
-    username              varchar(255) not null,
     email                 varchar(255) not null,
-    username_changed_date date
+    username_changed_date date,
+    session_key           varchar(255),
+    session_expire        date
 );
 
 CREATE TABLE IF NOT EXISTS message

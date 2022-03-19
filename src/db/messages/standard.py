@@ -1,7 +1,7 @@
 from db.utils import fetch_many
 
 
-def fetch_all_msgs_from_chan(chan_id):
+def fetch_all_messages(chan_id):
     return fetch_many("""
         SELECT *
         FROM message

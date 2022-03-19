@@ -2,6 +2,7 @@ import os
 
 import psycopg2
 import yaml
+from psycopg2.extras import RealDictCursor
 
 
 def connect():
@@ -12,7 +13,7 @@ def connect():
 
     return psycopg2.connect(dbname=config['database'],
                             user=config['user'],
-                            password=config['password'],
+                            password=config['pass'],
                             host=config['host'],
                             port=config['port'])
 
@@ -32,7 +33,7 @@ def exec_sql_file(path):
 
 def fetch_one(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute(sql, args)
     one = cur.fetchone()
     conn.close()
@@ -42,7 +43,7 @@ def fetch_one(sql, args=None):
 
 def fetch_many(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute(sql, args)
     list_of_tuples = cur.fetchall()
     conn.close()
@@ -52,7 +53,7 @@ def fetch_many(sql, args=None):
 
 def commit(sql, args=None):
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     result = cur.execute(sql, args)
     conn.commit()
     conn.close()
@@ -69,6 +70,10 @@ def reload_routines():
     exec_sql_file('../../res/routines/procedures.sql')
 
 
+def reload_triggers():
+    exec_sql_file('../../res/routines/triggers.sql')
+
+
 def reload_data():
     commit("CALL reload_test_data()")
 
@@ -77,3 +82,4 @@ def init_db():
     reload_routines()
     rebuild_tables()
     reload_data()
+    reload_triggers()
